@@ -2,29 +2,3 @@ translation:
   defaultLanguage: en
   pathWithTranslations: translations/
   configName: translation
-big:
-  configName: big
-  defaultPathWithTemplates: /
-  useCache: false
-  allowPhpTags: false
-  debugger:
-    lines: 20
-    template: vendor/codememory/big/Debugger/templates/white
-caching:
-  fileConfig: configs/caching
-configuration:
-  pathWithConfigs: configs
-  useCache: false
-environment:
-  pathWithFile: null
-  filename: .env
-  defaultAppMode: dev
-  useCache: false
-http:
-  configName: http
-controlHttpStatus:
-  configName: httpStatus
-view:
-  configName: view
-  pathWithTemplates: /
-  engine: Codememory\Components\View\Engines\BigEngine

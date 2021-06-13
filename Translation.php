@@ -2,6 +2,9 @@
 
 namespace Codememory\Components\Translator;
 
+use Codememory\Components\Caching\Cache;
+use Codememory\Components\Caching\Exceptions\ConfigPathNotExistException;
+use Codememory\Components\Markup\Types\YamlType;
 use Codememory\Components\Translator\Interfaces\TranslationInterface;
 use Codememory\FileSystem\File;
 use Codememory\FileSystem\Interfaces\FileInterface;
@@ -18,6 +21,9 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Translation implements TranslationInterface
 {
+
+    public const TYPE_CACHE = '_cdm-translations';
+    public const NAME_CACHE = 'translations';
 
     /**
      * @var Language
@@ -37,12 +43,14 @@ class Translation implements TranslationInterface
     /**
      * @var array
      */
-    private array $langWithTranslations = [];
+    private array $langWithTranslations;
 
     /**
      * Translation constructor.
      *
      * @param RequestInterface $request
+     *
+     * @throws ConfigPathNotExistException
      */
     public function __construct(RequestInterface $request)
     {
@@ -51,9 +59,7 @@ class Translation implements TranslationInterface
         $this->utils = new Utils();
         $this->language = new Language($request, $this->utils, $this->filesystem);
 
-        foreach ($this->language->getAllLang() as $lang) {
-            $this->langWithTranslations[$lang] = $this->getAllTranslationsByLang($lang);
-        }
+        $this->langWithTranslations = $this->processReceivingTransfers();
 
     }
 
@@ -136,6 +142,28 @@ class Translation implements TranslationInterface
     {
 
         return sprintf('%s/%s.yaml', $this->filesystem->getRealPath($this->utils->getPathWithTranslations()), $lang);
+
+    }
+
+    /**
+     * @return array
+     * @throws ConfigPathNotExistException
+     */
+    private function processReceivingTransfers(): array
+    {
+
+        $langWithTranslations = [];
+        $caching = new Cache(new YamlType(), $this->filesystem);
+
+        if (isDev()) {
+            foreach ($this->language->getAllLang() as $lang) {
+                $langWithTranslations[$lang] = $this->getAllTranslationsByLang($lang);
+            }
+        } else {
+            $langWithTranslations = $caching->get(self::TYPE_CACHE, self::NAME_CACHE);
+        }
+
+        return $langWithTranslations;
 
     }
 
