@@ -18,8 +18,8 @@
         "symfony/yaml": "^5.3",
         "codememory/caching": "^1.1",
         "codememory/console": "^1.0",
-        "codememory/markup": "^1.0",
-        "codememory/environment": "^1.0"
+        "codememory/environment": "^1.0",
+        "codememory/markup": "2.0"
     },
     "autoload": {
         "psr-4": {
