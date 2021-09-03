@@ -9,17 +9,17 @@
         }
     ],
     "require": {
-        "codememory/config": "^1.1",
-        "codememory/http-foundation": "^2.1",
-        "codememory/global-config": "^1.1",
-        "codememory/fs": "^1.1",
-        "codememory/support": "^1.2",
-        "codememory/finder": "^1.1",
-        "symfony/yaml": "^5.3",
         "codememory/caching": "^1.1",
+        "codememory/config": "2.0",
         "codememory/console": "^1.0",
         "codememory/environment": "^1.0",
-        "codememory/markup": "2.0"
+        "codememory/finder": "^1.1",
+        "codememory/fs": "^1.1",
+        "codememory/global-config": "^1.1",
+        "codememory/http-foundation": "^2.1",
+        "codememory/markup": "2.0",
+        "codememory/support": "^1.2",
+        "symfony/yaml": "^5.3"
     },
     "autoload": {
         "psr-4": {
@@ -28,5 +28,8 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^5.3"
+    },
+    "config": {
+        "sort-packages": true
     }
 }
